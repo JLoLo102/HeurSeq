@@ -308,9 +308,9 @@ class TransposeLayer(nn.Module):
         return x.transpose(self.dim1, self.dim2)
 
 
-class HeurSeq_S(nn.Module):
+class HSL-Pat_S(nn.Module):
     """
-    HeurSeq_S（Swin Transformer 版本）
+    HSL-Pat_S（Swin Transformer 版本）
     输出:
         logits: [B*V, nclasses]
         fi:     [B*V, C, h, w]  —— Swin 最后 stage 的特征图
@@ -364,7 +364,7 @@ class HeurSeq_S(nn.Module):
         return logits, feat
 
 
-class HeurSeq_M(nn.Module):
+class HSL-Pat_M(nn.Module):
     def __init__(self, name, model, pool_mode='PT', nclasses=527, cnn_name='densenet121', num_views=5):
         super().__init__()
 
@@ -372,10 +372,10 @@ class HeurSeq_M(nn.Module):
         self.nclasses = nclasses
         self.pool_mode = pool_mode
 
-        # 保存 HeurSeq_S
+        # 保存 HSL-Pat_S
         self.net_1 = model
 
-        # HeurSeq_S 输出通道
+        # HSL-Pat_S 输出通道
         self.embed_dim = model.embed_dim  # ConvNeXt-Tiny 768
 
         # 投影 Conv（如果需要的话）
@@ -429,7 +429,7 @@ class HeurSeq_M(nn.Module):
         x: [B*V, 3, H, W]
         """
         B = x.shape[0] // self.num_views
-        # 1) HeurSeq_S 提取 feature map
+        # 1) HSL-Pat_S 提取 feature map
         _, img_fi = self.net_1(x)           # [B*V, D]
 
 
