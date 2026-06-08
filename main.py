@@ -13,11 +13,11 @@ from tools.ImgDataset import MultiviewImgDataset
 from tools.ImgDataset_text import MultiviewImgTextDataset
 from tools.utils import record_times
 
-from model import HeurSeq_S, HeurSeq_M
+from model import HSL-Pat_S, HSL-Pat_M
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-name", "--name", type=str, help="Name of the experiment", default="HeurSeq")
+parser.add_argument("-name", "--name", type=str, help="Name of the experiment", default="HSL-Pat")
 parser.add_argument("-bs", "--batchSize", type=int, help="Batch size for the second stage", default=32)
 parser.add_argument("-num_models", type=int, help="number of models per class", default=1000)
 parser.add_argument("-lr", type=float, help="learning rate", default=1e-4)
@@ -55,7 +55,7 @@ def create_folder(log_dir):
         os.mkdir(log_dir)
 
 if __name__ == '__main__':
-    set_seed(42)  # ✅ 放在最前面！
+    set_seed(42)  
 
     args = parser.parse_args()
     pretraining = not args.no_pretraining
@@ -68,7 +68,7 @@ if __name__ == '__main__':
 
  
 
-    cnet = HeurSeq_S(args.name, nclasses=527, pretraining=pretraining, cnn_name=args.cnn_name)
+    cnet = HSL-Pat_S(args.name, nclasses=527, pretraining=pretraining, cnn_name=args.cnn_name)
     
 
     print('======start Stage======')
@@ -76,7 +76,7 @@ if __name__ == '__main__':
     create_folder(log_dir)
 
 
-    cnet_2 = HeurSeq_M( args.name,cnet, nclasses=527, cnn_name=args.cnn_name, num_views=args.num_views)
+    cnet_2 = HSL-Pat_M( args.name,cnet, nclasses=527, cnn_name=args.cnn_name, num_views=args.num_views)
     
 
     # del cnet
